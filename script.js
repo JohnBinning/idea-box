@@ -42,7 +42,8 @@ $('#save').on('click', function(){
   var $title = $('#title').val();
   var $body = $('#body').val();
   var $quality = 'swill';
-  createObject($id, $title, $body, $quality);
+  createCard($id, $title, $body, $quality);
+  getValues($id, $title, $body, $quality);
 })
 
 //constructor
@@ -51,13 +52,24 @@ function createObject($id, $title, $body, $quality){
   this.title = $title;
   this.body = $body;
   this.quality = $quality;
-  createCard(this.title, this.body, this.quality);
+}
+
+//conglomerates values
+function getValues($id, $title, $body){
+  var newObject = new createObject($id, $title, $body);
+  storeObject($id, newObject);
+}
+
+//storing objects
+function storeObject($id, newObject){
+  var store = JSON.stringify(newObject);
+  localStorage.setItem($id, store);
 }
 
 //function 3 - create card
 //uses 4 variables: id, title, body, quality
 //uses prepend to insert text literal string into section#card-container
-function createCard($title, $body, $quality){
+function createCard($id, $title, $body, $quality){
   // var $id = Date.now();
   $('#card-container').prepend(`
     <div class="card">
@@ -72,10 +84,13 @@ function createCard($title, $body, $quality){
         <h4>quality: <span class="quality">${$quality}</span></h4>
         </section>
     </div> `);
-    $('#title').val('');
-    $('#body').val('');
-    console.log($quality)
+    clearInput();
     // storyLocally($id, $title, $body, $quality); -> to function 9
+}
+
+function clearInput (){
+  $('#title').val('');
+  $('#body').val('');
 }
 
 //function 4 - delete button
@@ -115,10 +130,6 @@ $('#card-container').on('click', '.upvote', function(){
 //function 8 - addEventListener to allow click and enable 'editable' for body
 //uses var body
 //calls function 9 for storage when clicked off or 'enter' is pressed
-
-//** function 9 - into local storage
-//uses var stringify
-//stores card information through JSON.stringify()
 
 //** function 10 - out of local storage
 //uses var parse
