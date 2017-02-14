@@ -6,7 +6,32 @@
     <link href="style.css" type="text/css" rel="stylesheet">
   </head>
   <body>
+    <section id="input-container">
+      <h1>ideabox</h1>
+      <input id="title" type="text" placeholder="Title">
+      <input id="body" type="text" placeholder="Body">
+      <button id="save">save</button>
+    </section>
+    <section id="search-container">
+      <input id="search-input" type="text" placeholder="Search">
+    </section>
+    <section id="card-container">
+      <div class="dummy-card">
+        <section class="card-head">
+          <h2>Title</h2>
+          <div class="delete"></div>
+        </section>
+        <h3>Idea body</h3>
+        <section class="quality-container">
+          <div class="upvote"></div>
+          <div class="downvote"></div>
+          <h4>quality: <span class="quality">swill</span></h4>
+        </section>
+      </div>
+    </section>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="jquery-3.1.1.min.js" type="text.js"></script>
     <script src="script.js" type="text/js"></script>
   </body>
 </html>
