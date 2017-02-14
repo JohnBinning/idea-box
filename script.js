@@ -21,15 +21,55 @@
 //** function 1 - retrieve stored cards from local storage
 //forwards information to function 9
 
+//function 1.9999 - disable enter button on startup
+$('#save').prop('disabled', true);
+
 //function 2 - enabling enter button when text appears in title and body inputs
 //uses inputs from title and body
+$('input[type=text]').on('keyup', function(){
+  var $title = $('#title').val();
+  var $body = $('#body').val();
+  if ($title !== "" && $body !== ""){
+    $('#save').prop('disabled', false);
+  } else {
+    $('#save').prop('disabled', true);
+  }
+})
+
+//function 2.5 - save button activation
+$('#save').on('click', function(){
+  var $title = $('#title').val();
+  var $body = $('#body').val();
+  createCard($title, $body);
+})
 
 //function 3 - create card
 //uses 4 variables: id, title, body, quality
 //uses prepend to insert text literal string into section#card-container
+function createCard($title, $body){
+  // var $id = Date.now();
+  // var $quality = 0;
+  $('#card-container').prepend(`
+    <div class="card">
+      <section class="card-head">
+        <h2>${$title}</h2>
+        <div class="delete"></div>
+      </section>
+        <h3>${$body}</h3>
+      <section class="quality-container">
+        <div class="upvote"></div>
+        <div class="downvote"></div>
+        <h4>quality: <span class="quality">swill</span></h4>
+        </section>
+    </div> `);
+    // storyLocally($id, $title, $body, $quality); -> to function 9
+}
 
 //function 4 - delete button
 //uses .parent().remove() to delete given card
+$('#card-container').on('click', '.delete', function() {
+  $(this).parent('.card').remove();
+})
 
 //function 5 - upvote button
 //uses var quality
