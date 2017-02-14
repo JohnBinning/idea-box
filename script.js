@@ -48,7 +48,7 @@ $('#save').on('click', function(){
 //uses prepend to insert text literal string into section#card-container
 function createCard($title, $body){
   // var $id = Date.now();
-  // var $quality = 0;
+  var $quality = 0;
   $('#card-container').prepend(`
     <div class="card">
       <section class="card-head">
@@ -59,7 +59,7 @@ function createCard($title, $body){
       <section class="quality-container">
         <div class="upvote"></div>
         <div class="downvote"></div>
-        <h4>quality: <span class="quality">swill</span></h4>
+        <h4>quality: <span class="quality">${$quality}</span></h4>
         </section>
     </div> `);
     // storyLocally($id, $title, $body, $quality); -> to function 9
@@ -68,13 +68,26 @@ function createCard($title, $body){
 //function 4 - delete button
 //uses .parent().remove() to delete given card
 $('#card-container').on('click', '.delete', function() {
-  $(this).parent('.card').remove();
+  $(this).parent().parent().remove();
 })
 
 //function 5 - upvote button
 //uses var quality
 //uses if statement to count up from 0, to 1, to 2. only moves in increments of 1
 //button is disabled if var quality === 2
+$('#card-container').on('click', '.upvote', function($quality){
+    if ($quality === 0){
+      $quality++
+      qualityTranslator($quality);
+      console.log($quality)
+    } else if ($quality === 1){
+      $quality++
+      qualityTranslator($quality);
+      $('.upvote').prop('disabled', true)
+    }
+
+})
+
 
 //function 6 - downvote button
 //uses var quality

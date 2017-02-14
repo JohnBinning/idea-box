@@ -1,0 +1,11 @@
+.delete {
+  background-image: url('images/delete.svg');
+  height: 20px;
+  width: 20px;
+}
+
+.upvote {
+  background-image: url('images/upvote.svg');
+  height: 20px;
+  width: 20px;
+}
