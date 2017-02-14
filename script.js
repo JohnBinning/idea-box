@@ -38,17 +38,27 @@ $('input[type=text]').on('keyup', function(){
 
 //function 2.5 - save button activation
 $('#save').on('click', function(){
+  var $id = Date.now();
   var $title = $('#title').val();
   var $body = $('#body').val();
-  createCard($title, $body);
+  var $quality = 'swill';
+  createObject($id, $title, $body, $quality);
 })
+
+//constructor
+function createObject($id, $title, $body, $quality){
+  this.id = $id;
+  this.title = $title;
+  this.body = $body;
+  this.quality = $quality;
+  createCard(this.title, this.body, this.quality);
+}
 
 //function 3 - create card
 //uses 4 variables: id, title, body, quality
 //uses prepend to insert text literal string into section#card-container
-function createCard($title, $body){
+function createCard($title, $body, $quality){
   // var $id = Date.now();
-  var $quality = 0;
   $('#card-container').prepend(`
     <div class="card">
       <section class="card-head">
@@ -78,17 +88,12 @@ $('#card-container').on('click', '.delete', function() {
 //uses var quality
 //uses if statement to count up from 0, to 1, to 2. only moves in increments of 1
 //button is disabled if var quality === 2
-$('#card-container').on('click', '.upvote', function($quality){
-    console.log($quality)
-    if ($quality === 0){
-      $quality++
-      qualityTranslator($quality);
-      console.log($quality)
-    } else if ($quality === 1){
-      $quality++
-      qualityTranslator($quality);
-      $('.upvote').prop('disabled', true)
-    }
+$('#card-container').on('click', '.upvote', function(){
+  var currentQuality = $(this).siblings('.quality');
+  if (currentQuality.text() == 'swill'){
+    currentQuality.val('plausible');
+    console.log(currentQuality.val());
+  }
 })
 
 
