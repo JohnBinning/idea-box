@@ -62,6 +62,9 @@ function createCard($title, $body){
         <h4>quality: <span class="quality">${$quality}</span></h4>
         </section>
     </div> `);
+    $('#title').val('');
+    $('#body').val('');
+    console.log($quality)
     // storyLocally($id, $title, $body, $quality); -> to function 9
 }
 
@@ -76,6 +79,7 @@ $('#card-container').on('click', '.delete', function() {
 //uses if statement to count up from 0, to 1, to 2. only moves in increments of 1
 //button is disabled if var quality === 2
 $('#card-container').on('click', '.upvote', function($quality){
+    console.log($quality)
     if ($quality === 0){
       $quality++
       qualityTranslator($quality);
@@ -85,7 +89,6 @@ $('#card-container').on('click', '.upvote', function($quality){
       qualityTranslator($quality);
       $('.upvote').prop('disabled', true)
     }
-
 })
 
 
