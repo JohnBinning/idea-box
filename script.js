@@ -81,8 +81,10 @@ function createCard($id, $title, $body, $quality){
       <section class="quality-container">
         <div class="upvote"></div>
         <div class="downvote"></div>
-        <h4>quality: <span class="quality">${$quality}</span></h4>
         </section>
+        <h4>quality: </h4>
+        <span class="quality">${$quality}</span>
+
     </div> `);
     clearInput();
     // storyLocally($id, $title, $body, $quality); -> to function 9
@@ -104,10 +106,14 @@ $('#card-container').on('click', '.delete', function() {
 //uses if statement to count up from 0, to 1, to 2. only moves in increments of 1
 //button is disabled if var quality === 2
 $('#card-container').on('click', '.upvote', function(){
-  var currentQuality = $(this).siblings('.quality');
-  if (currentQuality.text() == 'swill'){
-    currentQuality.val('plausible');
-    console.log(currentQuality.val());
+  var currentQuality = $('.quality');
+  console.log(currentQuality.text());
+  if (currentQuality.text() === 'swill'){
+    currentQuality.text('plausible');
+    console.log(currentQuality.text());
+  } else if (currentQuality.text() === 'plausible'){
+    currentQuality.text('genius');
+    console.log(currentQuality.text());
   }
 })
 
@@ -116,6 +122,18 @@ $('#card-container').on('click', '.upvote', function(){
 //uses var quality
 //uses if statement to count down from 2, to 1, to 0. only moves in increments of 1
 //button is disabled if var quality === 0
+$('#card-container').on('click', '.downvote', function(){
+  var currentQuality = $('.quality');
+  console.log(currentQuality.text());
+  if (currentQuality.text() === 'genius'){
+    currentQuality.text('plausible');
+    console.log(currentQuality.text());
+  } else if (currentQuality.text() === 'plausible'){
+    currentQuality.text('swill');
+    console.log(currentQuality.text());
+  }
+})
+
 
 //----potential function for sorting cards through quality (swill - plausible - genius)
 
