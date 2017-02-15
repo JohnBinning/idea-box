@@ -44,7 +44,6 @@ $('#save').on('click', function(){
   var $body = $('#body').val();
   var $quality = 'swill';
   getValues($id, $title, $body, $quality);
-  createCard($id, $title, $body, $quality);
 })
 
 //constructor
@@ -59,6 +58,7 @@ function createObject($id, $title, $body, $quality){
 function getValues($id, $title, $body, $quality){
   var newObject = new createObject($id, $title, $body, $quality);
   storeObject($id, newObject);
+  createCard(newObject);
 }
 
 //storing objects
@@ -92,9 +92,9 @@ function createCard(tempObject){
       <section class="quality-container">
         <div class="upvote"></div>
         <div class="downvote"></div>
-        </section>
         <h4>quality: </h4>
         <span class="quality">${tempObject.quality}</span>
+        </section>
 
     </div> `);
     clearInput();
@@ -118,32 +118,48 @@ $('#card-container').on('click', '.delete', function() {
 //uses if statement to count up from 0, to 1, to 2. only moves in increments of 1
 //button is disabled if var quality === 2
 $('#card-container').on('click', '.upvote', function(){
-  var currentQuality = $('.quality');
-  console.log(currentQuality.text());
-  if (currentQuality.text() === 'swill'){
-    currentQuality.text('plausible');
-    console.log(currentQuality.text());
-  } else if (currentQuality.text() === 'plausible'){
-    currentQuality.text('genius');
-    console.log(currentQuality.text());
+  var currentQuality = $(this).siblings('span').text();
+  if (currentQuality === 'swill'){
+    currentQuality = 'plausible';
+    $(this).siblings('span').text('plausible');
+    updateQuality(this, currentQuality);
+  } else if (currentQuality === 'plausible'){
+    currentQuality = 'genius';
+    $(this).siblings('span').text('genius');
+    updateQuality(this, currentQuality);
   }
 })
+
+$('#card-container').on('click', '.downvote', function(){
+  var currentQuality = $(this).siblings('span').text();
+  if (currentQuality === 'genius'){
+    currentQuality = 'plausible';
+    $(this).siblings('span').text('plausible');
+    updateQuality(this, currentQuality);
+  } else if (currentQuality === 'plausible'){
+    currentQuality = 'swill';
+    $(this).siblings('span').text('swill');
+    updateQuality(this, currentQuality);
+  }
+})
+
+
+function updateQuality(voteInput, currentQuality){
+  console.log(currentQuality);
+  var parentCardId = $(voteInput).parent().parent().attr('id');
+  // console.log(parentCard);
+  var accessCard = JSON.parse(localStorage.getItem(parentCardId));
+  accessCard.quality = currentQuality;
+  console.log(accessCard);
+  localStorage.setItem(parentCardId, JSON.stringify(accessCard));
+
+}
 
 //function 6 - downvote button
 //uses var quality
 //uses if statement to count down from 2, to 1, to 0. only moves in increments of 1
 //button is disabled if var quality === 0
-$('#card-container').on('click', '.downvote', function(){
-  var currentQuality = $('.quality');
-  console.log(currentQuality.text());
-  if (currentQuality.text() === 'genius'){
-    currentQuality.text('plausible');
-    console.log(currentQuality.text());
-  } else if (currentQuality.text() === 'plausible'){
-    currentQuality.text('swill');
-    console.log(currentQuality.text());
-  }
-})
+
 
 
 //----potential function for sorting cards through quality (swill - plausible - genius)
