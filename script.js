@@ -85,10 +85,10 @@ function createCard(tempObject){
   $('#card-container').prepend(`
     <div id="${tempObject.id}" class="card">
       <section class="card-head">
-        <h2>${tempObject.title}</h2>
+        <h2 contenteditable>${tempObject.title}</h2>
         <div class="delete"></div>
       </section>
-        <h3>${tempObject.body}</h3>
+        <h3 contenteditable>${tempObject.body}</h3>
       <section class="quality-container">
         <div class="upvote"></div>
         <div class="downvote"></div>
@@ -117,8 +117,6 @@ $('#card-container').on('click', '.delete', function() {
 
 //function 5 - upvote button
 //uses var quality
-//uses if statement to count up from 0, to 1, to 2. only moves in increments of 1
-//button is disabled if var quality === 2
 $('#card-container').on('click', '.upvote', function(){
   var currentQuality = $(this).siblings('span').text();
   if (currentQuality === 'swill'){
@@ -132,6 +130,7 @@ $('#card-container').on('click', '.upvote', function(){
   }
 })
 
+//downvote button
 $('#card-container').on('click', '.downvote', function(){
   var currentQuality = $(this).siblings('span').text();
   if (currentQuality === 'genius'){
@@ -145,6 +144,7 @@ $('#card-container').on('click', '.downvote', function(){
   }
 })
 
+//stores upvotes and downvotes in local storage
 function updateQuality(voteInput, currentQuality){
   var parentCardId = $(voteInput).parent().parent().attr('id');
   var accessCard = JSON.parse(localStorage.getItem(parentCardId));
@@ -152,27 +152,27 @@ function updateQuality(voteInput, currentQuality){
   localStorage.setItem(parentCardId, JSON.stringify(accessCard));
 }
 
-//function 6 - downvote button
-//uses var quality
-//uses if statement to count down from 2, to 1, to 0. only moves in increments of 1
-//button is disabled if var quality === 0
+//title is editable and saves in local storage
+$('h2').on('keyup', function(){
+  var parentCardId = $(this).parent().parent().attr('id');
+  var accessCard = JSON.parse(localStorage.getItem(parentCardId));
+  accessCard.title = $(this).text();
+  localStorage.setItem(parentCardId, JSON.stringify(accessCard));
+});
 
-
+//body is editable and saves in local storage
+$('h3').on('keyup', function(){
+  var parentCardId = $(this).parent().attr('id');
+  var accessCard = JSON.parse(localStorage.getItem(parentCardId));
+  accessCard.body = $(this).text();
+  localStorage.setItem(parentCardId, JSON.stringify(accessCard));
+});
 
 //----potential function for sorting cards through quality (swill - plausible - genius)
 
 //----potential function for tagging
 //    needs another input for tags
 //    needs array, need to iterate through forEach() using RegEx to find keywords
-
-//function 7 - addEventListener to allow click and enable 'editable' for title
-//uses var title
-//calls function 9 for storage when clicked off or 'enter' is pressed
-
-//function 8 - addEventListener to allow click and enable 'editable' for body
-//uses var body
-//calls function 9 for storage when clicked off or 'enter' is pressed
-
 
 //** function 11 - search
 //uses var search
