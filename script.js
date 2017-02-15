@@ -105,13 +105,15 @@ function createCard(tempObject){
 function clearInput (){
   $('#title').val('');
   $('#body').val('');
-}
+};
 
 //function 4 - delete button
 //uses .parent().remove() to delete given card
 $('#card-container').on('click', '.delete', function() {
   $(this).parent().parent().remove();
-})
+  var parentCardId = $(this).parent().parent().attr('id');
+  localStorage.removeItem(parentCardId);
+});
 
 //function 5 - upvote button
 //uses var quality
@@ -143,16 +145,11 @@ $('#card-container').on('click', '.downvote', function(){
   }
 })
 
-
 function updateQuality(voteInput, currentQuality){
-  console.log(currentQuality);
   var parentCardId = $(voteInput).parent().parent().attr('id');
-  // console.log(parentCard);
   var accessCard = JSON.parse(localStorage.getItem(parentCardId));
   accessCard.quality = currentQuality;
-  console.log(accessCard);
   localStorage.setItem(parentCardId, JSON.stringify(accessCard));
-
 }
 
 //function 6 - downvote button
