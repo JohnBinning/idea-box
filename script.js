@@ -20,6 +20,7 @@
 
 //** function 1 - retrieve stored cards from local storage
 //forwards information to function 9
+window.onload = retrieveCards();
 
 //function 1.9999 - disable enter button on startup
 $('#save').prop('disabled', true);
@@ -42,8 +43,8 @@ $('#save').on('click', function(){
   var $title = $('#title').val();
   var $body = $('#body').val();
   var $quality = 'swill';
-  createCard($id, $title, $body, $quality);
   getValues($id, $title, $body, $quality);
+  createCard($id, $title, $body, $quality);
 })
 
 //constructor
@@ -55,8 +56,8 @@ function createObject($id, $title, $body, $quality){
 }
 
 //conglomerates values
-function getValues($id, $title, $body){
-  var newObject = new createObject($id, $title, $body);
+function getValues($id, $title, $body, $quality){
+  var newObject = new createObject($id, $title, $body, $quality);
   storeObject($id, newObject);
 }
 
@@ -66,30 +67,41 @@ function storeObject($id, newObject){
   localStorage.setItem($id, store);
 }
 
+//retreive objects
+function retrieveCards(){
+  for (var key in localStorage){
+    var tempObject = JSON.parse(localStorage[key])
+    console.log('temp');
+    createCard(tempObject);
+  }
+}
+
 //function 3 - create card
 //uses 4 variables: id, title, body, quality
 //uses prepend to insert text literal string into section#card-container
-function createCard($id, $title, $body, $quality){
+function createCard(tempObject){
   // var $id = Date.now();
+  console.log('create card');
   $('#card-container').prepend(`
-    <div class="card">
+    <div id="${tempObject.id}" class="card">
       <section class="card-head">
-        <h2>${$title}</h2>
+        <h2>${tempObject.title}</h2>
         <div class="delete"></div>
       </section>
-        <h3>${$body}</h3>
+        <h3>${tempObject.body}</h3>
       <section class="quality-container">
         <div class="upvote"></div>
         <div class="downvote"></div>
         </section>
         <h4>quality: </h4>
-        <span class="quality">${$quality}</span>
+        <span class="quality">${tempObject.quality}</span>
 
     </div> `);
     clearInput();
     // storyLocally($id, $title, $body, $quality); -> to function 9
 }
 
+//clears title and body
 function clearInput (){
   $('#title').val('');
   $('#body').val('');
@@ -116,7 +128,6 @@ $('#card-container').on('click', '.upvote', function(){
     console.log(currentQuality.text());
   }
 })
-
 
 //function 6 - downvote button
 //uses var quality
@@ -149,9 +160,6 @@ $('#card-container').on('click', '.downvote', function(){
 //uses var body
 //calls function 9 for storage when clicked off or 'enter' is pressed
 
-//** function 10 - out of local storage
-//uses var parse
-//retrieves card information through JSON.parse()
 
 //** function 11 - search
 //uses var search
