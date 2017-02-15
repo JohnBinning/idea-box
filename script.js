@@ -84,15 +84,15 @@ function createCard(tempObject){
   console.log('create card');
   $('#card-container').prepend(`
     <div id="${tempObject.id}" class="card">
+      <div class="delete"></div>
       <section class="card-head">
         <h2 contenteditable>${tempObject.title}</h2>
-        <div class="delete"></div>
       </section>
         <h3 contenteditable>${tempObject.body}</h3>
       <section class="quality-container">
-        <div class="upvote"></div>
-        <div class="downvote"></div>
-        <h4>quality: </h4>
+        <div class="upvote buttons"></div>
+        <div class="downvote buttons"></div>
+        <h4 class="buttons">quality: </h4>
         <span class="quality">${tempObject.quality}</span>
         </section>
 
@@ -110,8 +110,8 @@ function clearInput (){
 //function 4 - delete button
 //uses .parent().remove() to delete given card
 $('#card-container').on('click', '.delete', function() {
-  $(this).parent().parent().remove();
-  var parentCardId = $(this).parent().parent().attr('id');
+  $(this).parent().remove();
+  var parentCardId = $(this).parent().attr('id');
   localStorage.removeItem(parentCardId);
 });
 
