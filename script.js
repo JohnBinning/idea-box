@@ -44,6 +44,7 @@ $('#save').on('click', function(){
   var $body = $('#body').val();
   var $quality = 'swill';
   getValues($id, $title, $body, $quality);
+  $('#save').prop('disabled', true);
 })
 
 //constructor
@@ -84,18 +85,17 @@ function createCard(tempObject){
   console.log('create card');
   $('#card-container').prepend(`
     <div id="${tempObject.id}" class="card">
+      <div class="delete"></div>
       <section class="card-head">
-        <h2 contenteditable>${tempObject.title}</h2>
-        <div class="delete"></div>
+        <h2 class="title-text" contenteditable>${tempObject.title}</h2>
       </section>
-        <h3 contenteditable>${tempObject.body}</h3>
+        <h3 class="body-text" contenteditable>${tempObject.body}</h3>
       <section class="quality-container">
         <div class="upvote"></div>
         <div class="downvote"></div>
         <h4>quality: </h4>
         <span class="quality">${tempObject.quality}</span>
         </section>
-
     </div> `);
     clearInput();
     // storyLocally($id, $title, $body, $quality); -> to function 9
@@ -110,8 +110,8 @@ function clearInput (){
 //function 4 - delete button
 //uses .parent().remove() to delete given card
 $('#card-container').on('click', '.delete', function() {
-  $(this).parent().parent().remove();
-  var parentCardId = $(this).parent().parent().attr('id');
+  $(this).parent().remove();
+  var parentCardId = $(this).parent().attr('id');
   localStorage.removeItem(parentCardId);
 });
 
@@ -153,27 +153,39 @@ function updateQuality(voteInput, currentQuality){
 }
 
 //title is editable and saves in local storage
-$('h2').on('keyup', function(){
-  var parentCardId = $(this).parent().parent().attr('id');
-  var accessCard = JSON.parse(localStorage.getItem(parentCardId));
-  accessCard.title = $(this).text();
-  localStorage.setItem(parentCardId, JSON.stringify(accessCard));
+$('#card-container').on('focusout', '.title-text', function(){
+  var newTitle = $(this).text();
+  updateTitle(this, newTitle);
 });
 
-//body is editable and saves in local storage
-$('h3').on('keyup', function(){
-  var parentCardId = $(this).parent().attr('id');
+function updateTitle(location, newTitle){
+  var parentCardId = $(location).parent().parent().attr('id');
   var accessCard = JSON.parse(localStorage.getItem(parentCardId));
-  accessCard.body = $(this).text();
+  accessCard.title = newTitle;
   localStorage.setItem(parentCardId, JSON.stringify(accessCard));
+}
+
+//body is editable and saves in local storage
+$('#card-container').on('focusout', '.body-text', function(){
+  var newBody = $(this).text();
+  updateBody(this, newBody);
 });
+
+function updateBody(location, newBody){
+  var parentCardId = $(location).parent().attr('id');
+  var accessCard = JSON.parse(localStorage.getItem(parentCardId));
+  accessCard.body = newBody;
+  localStorage.setItem(parentCardId, JSON.stringify(accessCard));
+}
+
+
+//** function 11 - search
+//uses var search
+//use RegEx to find given words within cards
+// $('#search-input')
 
 //----potential function for sorting cards through quality (swill - plausible - genius)
 
 //----potential function for tagging
 //    needs another input for tags
 //    needs array, need to iterate through forEach() using RegEx to find keywords
-
-//** function 11 - search
-//uses var search
-//use RegEx to find given words within cards
