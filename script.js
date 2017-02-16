@@ -139,14 +139,15 @@ function updateTitle(location, newTitle){
 }
 
 //pulls editable text out of body
-$('#card-container').on('focusout', '.body-text', function(){
+$('#card-container').on('focusout', '.this-body', function(){
   var newBody = $(this).text();
+  console.log(newBody)
   updateBody(this, newBody);
 });
 
 //saves new body in local storage
 function updateBody(location, newBody){
-  var parentCardId = $(location).parent().attr('id');
+  var parentCardId = $(location).parent().parent().attr('id');
   var accessCard = JSON.parse(localStorage.getItem(parentCardId));
   accessCard.body = newBody;
   localStorage.setItem(parentCardId, JSON.stringify(accessCard));
