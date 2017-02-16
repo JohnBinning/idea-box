@@ -13,10 +13,9 @@ body {
   background-image: url('images/delete.svg');
   height: 20px;
   width: 20px;
-  /*display: inline-block;*/
   float: right;
   position: relative;
-  top: 2px;
+  top: 25px;
 }
 
 .delete:hover {
@@ -32,6 +31,7 @@ body {
 .downvote {
   background-image: url('images/downvote.svg');
   height: 20px;
+  margin-left: 10px;
   width: 20px;
 }
 
@@ -43,6 +43,10 @@ body {
   background-image: url('images/downvote-hover.svg')
 }
 
+h4 {
+  margin-left: 10px;
+}
+
 #save {
   background-color: #00a79d;
   border: none;
@@ -50,6 +54,9 @@ body {
   font-family: 'Roboto Slab', serif;
   display: inline-block;
   width: 60%;
+  box-sizing: border-box;
+  padding: 5px;
+  margin-top: 10px;
 }
 
 #save:hover:enabled {
@@ -69,11 +76,37 @@ body {
 #box-text {
   color: #6d6e71;
 }
+h3 {
+  text-align: left;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 400;
+  color: #939598;
+}
 
 h1 {
   color: #00a79d;
   margin: 0;
   padding: 20px;
+}
+
+h2 {
+  width: 75%;
+  text-align: left;
+  color: #6d6e71;
+  font-weight: 700;
+}
+
+h4 {
+  font-family: 'Roboto Slab', serif;
+  color: #6d6e71;
+
+}
+
+span {
+  color: #6d6e71;
+  font-family: 'Open Sans', sans-serif;
+  /*margin-left: 5px;*/
+
 }
 
 #title, #body, #search-input {
@@ -83,6 +116,12 @@ margin-bottom: 5px;
 padding: 5px;
 display: inline-block;
 width: 60%;
+box-sizing: border-box;
+border: 1px solid #939598;
+}
+
+#search-container {
+  padding-top: 15px;
 }
 
 .quality-container{
@@ -93,9 +132,7 @@ width: 60%;
   align-items: center;
 }
 
-.card-head {
 
-}
 
 .buttons {
   display: inline-block;
@@ -109,6 +146,22 @@ width: 60%;
 }
 
 .card {
-  width: 80%;
+  width: 60%;
   border-bottom: 2px solid #d1d3d4;
+}
+
+@media screen and (max-width: 480px) {
+
+
+#body {
+  height: 65px;
+  vertical-align: top;
+}
+
+#body::-webkit-input-placeholder {
+  vertical-align: top;
+}
+
+#title, #body, #search-input, .card, #save {
+  width: 90%;
 }
