@@ -1,32 +1,10 @@
-//stage 1: carry over any similar functions from Linked List
-//stage 2: workable without localStorage
-//stage 3: workable with localStorage
-//stage 4: search function
-//stage 5: extension: sorting
-//stage 6: extension: tags
-
-// 4 variable for card
-// •id - timestamp - need source for timestamp
-// •title
-// •body
-// •quality (0-swill, 1-plausible, 2-genius): initially at 0
-//
-// 1 variable for search
-//
-// 2 variables for local storage
-// •var stringify for JSON.stringify()
-// •var parse for JSON.parse()
-// --- 7 total
-
-//** function 1 - retrieve stored cards from local storage
-//forwards information to function 9
+//retrieve stored cards from local storage
 window.onload = retrieveCards();
 
-//function 1.9999 - disable enter button on startup
+//disable enter button on startup
 $('#save').prop('disabled', true);
 
-//function 2 - enabling enter button when text appears in title and body inputs
-//uses inputs from title and body
+//enabling enter button when text appears in title and body inputs
 $('input[type=text]').on('keyup', function(){
   var $title = $('#title').val();
   var $body = $('#body').val();
@@ -78,10 +56,7 @@ function retrieveCards(){
 }
 
 //function 3 - create card
-//uses 4 variables: id, title, body, quality
-//uses prepend to insert text literal string into section#card-container
 function createCard(tempObject){
-  // var $id = Date.now();
   console.log('create card');
   $('#card-container').prepend(`
     <div id="${tempObject.id}" class="card">
@@ -98,7 +73,6 @@ function createCard(tempObject){
         </section>
     </div> `);
     clearInput();
-    // storyLocally($id, $title, $body, $quality); -> to function 9
 }
 
 //clears title and body
@@ -107,16 +81,14 @@ function clearInput (){
   $('#body').val('');
 };
 
-//function 4 - delete button
-//uses .parent().remove() to delete given card
+//delete button
 $('#card-container').on('click', '.delete', function() {
   $(this).parent().remove();
   var parentCardId = $(this).parent().attr('id');
   localStorage.removeItem(parentCardId);
 });
 
-//function 5 - upvote button
-//uses var quality
+//upvote button
 $('#card-container').on('click', '.upvote', function(){
   var currentQuality = $(this).siblings('span').text();
   if (currentQuality === 'swill'){
@@ -152,12 +124,13 @@ function updateQuality(voteInput, currentQuality){
   localStorage.setItem(parentCardId, JSON.stringify(accessCard));
 }
 
-//title is editable and saves in local storage
+//pulls edited text out of title
 $('#card-container').on('focusout', '.title-text', function(){
   var newTitle = $(this).text();
   updateTitle(this, newTitle);
 });
 
+//saves new title in local storage
 function updateTitle(location, newTitle){
   var parentCardId = $(location).parent().parent().attr('id');
   var accessCard = JSON.parse(localStorage.getItem(parentCardId));
@@ -165,12 +138,13 @@ function updateTitle(location, newTitle){
   localStorage.setItem(parentCardId, JSON.stringify(accessCard));
 }
 
-//body is editable and saves in local storage
+//pulls editable text out of body
 $('#card-container').on('focusout', '.body-text', function(){
   var newBody = $(this).text();
   updateBody(this, newBody);
 });
 
+//saves new body in local storage
 function updateBody(location, newBody){
   var parentCardId = $(location).parent().attr('id');
   var accessCard = JSON.parse(localStorage.getItem(parentCardId));
@@ -178,9 +152,7 @@ function updateBody(location, newBody){
   localStorage.setItem(parentCardId, JSON.stringify(accessCard));
 }
 
-//** function 11 - search
-//uses var search
-//use RegEx to find given words within cards
+//search
 $('#search-input').on('keyup', function(){
   var searchText = $(this).val().toLowerCase();
   $('.searchable').each(function(){
