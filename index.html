@@ -11,13 +11,13 @@
   </head>
   <body>
     <section id="input-container">
-      <h1>idea<span id="box-text">box</span></h1>
-      <input id="title" type="text" placeholder="Title">
-      <textarea id="body" rows="4" columns="50" placeholder="Body"></textarea>
-      <button id="save">save</button>
+      <h1 class="idea-text">idea<span id="box-text">box</span></h1>
+      <input class="inputs" id="title" type="text" placeholder="Title" aria-label="Input field for idea title" aria-required="true">
+      <textarea class="inputs" id="body" rows="1" columns="50" placeholder="Body"aria-label="Input field for idea content" aria-required="true"></textarea>
+      <button id="save" aria-label="Button to save idea" aria-required="true">save</button>
     </section>
     <section id="search-container">
-      <input id="search-input" type="text" placeholder="Search">
+      <input id="search-input" type="text" placeholder="Search" aria-label="Input field for search" aria-required="true">
     </section>
     <section id="card-container">
     </section>

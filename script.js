@@ -5,7 +5,7 @@ window.onload = retrieveCards();
 $('#save').prop('disabled', true);
 
 //enabling enter button when text appears in title and body inputs
-$('input[type=text]').on('keyup', function(){
+$('.inputs').on('keyup', function(){
   var $title = $('#title').val();
   var $body = $('#body').val();
   if ($title !== "" && $body !== ""){
@@ -58,14 +58,14 @@ function retrieveCards(){
 function createCard(tempObject){
   $('#card-container').prepend(`
     <div id="${tempObject.id}" class="card">
-      <div class="delete"></div>
+      <div class="delete" aria-label="Button to delete idea" aria-required="true"></div>
       <section class="searchable">
         <h2 class="title-text" contenteditable>${tempObject.title}</h2>
         <h3 class="body-text" contenteditable>${tempObject.body}</h3>
       </section>
       <section class="quality-container">
-        <div class="upvote buttons"></div>
-        <div class="downvote buttons"></div>
+        <div class="upvote buttons" aria-label="Button to upvote idea quality" aria-required="true"></div>
+        <div class="downvote buttons" aria-label="Button to downvote idea quality" aria-required="true"></div>
         <h4 class="buttons">quality: </h4>
         <span class="quality">${tempObject.quality}</span>
         </section>
@@ -158,6 +158,12 @@ $('#search-input').on('keyup', function(){
     $(this).closest('.card')[compareText.indexOf(searchText) !== -1 ? 'show' : 'hide']();
   });
 });
+
+// $(window).on('resize', function(){
+//   if ($(window).width()<480){
+//     $('#body').rows="4"
+//   }
+// })
 
 //----potential function for sorting cards through quality (swill - plausible - genius)
 
