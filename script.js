@@ -183,7 +183,13 @@ function updateBody(location, newBody){
 //** function 11 - search
 //uses var search
 //use RegEx to find given words within cards
-// $('#search-input')
+$('#search-input').on('keyup', function(){
+  var searchText = $(this).val().toLowerCase();
+  $('.body-text').each(function(){
+    var compareText = $(this).text().toLowerCase();
+    $(this).closest('.card')[compareText.indexOf(searchText) !== -1 ? 'show' : 'hide']();
+  });
+});
 
 //----potential function for sorting cards through quality (swill - plausible - genius)
 
