@@ -59,6 +59,10 @@ body {
   background-color: #045E55;
 }
 
+#save:disabled {
+  background-color: #6d6e71;
+}
+
 #input-container {
   background-color: #e5f3f2;
   font-family: 'Roboto Slab', serif;
@@ -146,6 +150,10 @@ span {
 .card {
   border-bottom: 2px solid #d1d3d4;
   width: 60%;
+}
+
+.serchable {
+  height: 100px;
 }
 
 @media screen and (max-width: 480px) {
