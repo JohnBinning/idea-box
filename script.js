@@ -86,11 +86,10 @@ function createCard(tempObject){
   $('#card-container').prepend(`
     <div id="${tempObject.id}" class="card">
       <div class="delete"></div>
-      <section class="card-head">
-
+      <section class="searchable">
         <h2 class="title-text" contenteditable>${tempObject.title}</h2>
-      </section>
         <h3 class="body-text" contenteditable>${tempObject.body}</h3>
+      </section>
       <section class="quality-container">
         <div class="upvote buttons"></div>
         <div class="downvote buttons"></div>
@@ -179,13 +178,12 @@ function updateBody(location, newBody){
   localStorage.setItem(parentCardId, JSON.stringify(accessCard));
 }
 
-
 //** function 11 - search
 //uses var search
 //use RegEx to find given words within cards
 $('#search-input').on('keyup', function(){
   var searchText = $(this).val().toLowerCase();
-  $('.body-text').each(function(){
+  $('.searchable').each(function(){
     var compareText = $(this).text().toLowerCase();
     $(this).closest('.card')[compareText.indexOf(searchText) !== -1 ? 'show' : 'hide']();
   });
