@@ -50,14 +50,12 @@ function storeObject($id, newObject){
 function retrieveCards(){
   for (var key in localStorage){
     var tempObject = JSON.parse(localStorage[key])
-    console.log('temp');
     createCard(tempObject);
   }
 }
 
 //function 3 - create card
 function createCard(tempObject){
-  console.log('create card');
   $('#card-container').prepend(`
     <div id="${tempObject.id}" class="card">
       <div class="delete"></div>
@@ -139,9 +137,8 @@ function updateTitle(location, newTitle){
 }
 
 //pulls editable text out of body
-$('#card-container').on('focusout', '.this-body', function(){
+$('#card-container').on('focusout', '.body-text', function(){
   var newBody = $(this).text();
-  console.log(newBody)
   updateBody(this, newBody);
 });
 
