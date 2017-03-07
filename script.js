@@ -1,19 +1,24 @@
 //retrieve stored cards from local storage
-window.onload = retrieveCards();
+retrieveCards();
 
 //disable enter button on startup
-$('#save').prop('disabled', true);
-
-//enabling enter button when text appears in title and body inputs
-$('.inputs').on('keyup', function(){
+function disableSave(){
   var $title = $('#title').val();
   var $body = $('#body').val();
   if ($title !== "" && $body !== ""){
     $('#save').prop('disabled', false);
   } else {
     $('#save').prop('disabled', true);
-  }
+}
+}
+
+disableSave();
+
+//enabling enter button when text appears in title and body inputs
+$('.inputs').on('keyup', function(){
+  disableSave();
 })
+
 
 //function 2.5 - save button activation
 $('#save').on('click', function(){
@@ -22,7 +27,7 @@ $('#save').on('click', function(){
   var $body = $('#body').val();
   var $quality = 'swill';
   getValues($id, $title, $body, $quality);
-  $('#save').prop('disabled', true);
+  disableSave();
 })
 
 //constructor
@@ -116,7 +121,7 @@ $('#card-container').on('click', '.downvote', function(){
 
 //stores upvotes and downvotes in local storage
 function updateQuality(voteInput, currentQuality){
-  var parentCardId = $(voteInput).parent().parent().attr('id');
+  var parentCardId = $(voteInput).closest('.card').attr('id');
   var accessCard = JSON.parse(localStorage.getItem(parentCardId));
   accessCard.quality = currentQuality;
   localStorage.setItem(parentCardId, JSON.stringify(accessCard));
@@ -130,7 +135,7 @@ $('#card-container').on('focusout', '.title-text', function(){
 
 //saves new title in local storage
 function updateTitle(location, newTitle){
-  var parentCardId = $(location).parent().parent().attr('id');
+  var parentCardId = $(location).closest('.card').attr('id');
   var accessCard = JSON.parse(localStorage.getItem(parentCardId));
   accessCard.title = newTitle;
   localStorage.setItem(parentCardId, JSON.stringify(accessCard));
@@ -144,7 +149,7 @@ $('#card-container').on('focusout', '.body-text', function(){
 
 //saves new body in local storage
 function updateBody(location, newBody){
-  var parentCardId = $(location).parent().parent().attr('id');
+  var parentCardId = $(location).closest('.card').attr('id');
   var accessCard = JSON.parse(localStorage.getItem(parentCardId));
   accessCard.body = newBody;
   localStorage.setItem(parentCardId, JSON.stringify(accessCard));
@@ -164,9 +169,3 @@ $('#search-input').on('keyup', function(){
 //     $('#body').rows="4"
 //   }
 // })
-
-//----potential function for sorting cards through quality (swill - plausible - genius)
-
-//----potential function for tagging
-//    needs another input for tags
-//    needs array, need to iterate through forEach() using RegEx to find keywords
